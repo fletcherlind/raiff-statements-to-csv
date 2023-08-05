@@ -109,7 +109,7 @@ function loadCategoriesRecord(): CategoriesRecord {
     let userCategoriesRecord = null;
 
     try {
-        userCategoriesRecord = JSON.parse(localStorage.getItem(USER_CATEGORIES_RECORD_KEY) ?? '{}');
+        userCategoriesRecord = JSON.parse(localStorage.getItem(USER_CATEGORIES_RECORD_KEY) ?? '');
     } catch (e) {}
 
     return userCategoriesRecord
