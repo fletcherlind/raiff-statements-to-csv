@@ -106,19 +106,15 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
 ///
 
 function loadCategoriesRecord(): CategoriesRecord {
-    let userCategoriesRecord = {};
+    let userCategoriesRecord = null;
 
     try {
         userCategoriesRecord = JSON.parse(localStorage.getItem(USER_CATEGORIES_RECORD_KEY) ?? '{}');
-        console.log('userCategoriesRecord', userCategoriesRecord);
-    } catch (e) {
-        localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(config.categoriesMatchMap));
-    }
+    } catch (e) {}
 
-    return {
-        ...config.categoriesMatchMap,
-        ...(userCategoriesRecord instanceof Object ? userCategoriesRecord : {})
-    };
+    return userCategoriesRecord
+        ? userCategoriesRecord
+        : config.categoriesMatchMap;
 }
 
 function convertToCsv(rows: Row[], categoriesRecord: CategoriesRecord) {
