@@ -1,6 +1,6 @@
 import type { Row } from 'read-excel-file';
 import readXlsxFile from 'read-excel-file';
-import categoriesDefaultMatchMap from './categories-defaults.json';
+import config from './config.json';
 
 const SEPARATOR = ',';
 const USER_CATEGORIES_RECORD_KEY = 'USER_CATEGORIES_RECORD';
@@ -10,7 +10,6 @@ type CategoriesRecord = Record<string, string[]>;
 export function setupConverter(uploadBtnEl: HTMLLabelElement) {
     let categoriesRecord = loadCategoriesRecord();
 
-    // const titleEl = uploadBtnEl.getElementsByTagName('span')[0];
     const uploadInputEl = uploadBtnEl.getElementsByTagName('input')[0];
     const categoriesEls = {
         editorWrapper: document.querySelector('#categories-editor')!,
@@ -71,9 +70,9 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
     }
 
     function onCategoriesRecordReset() {
-        categoriesRecord = categoriesDefaultMatchMap;
-        localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(categoriesDefaultMatchMap));
-        categoriesEls.textarea.textContent = JSON.stringify(categoriesDefaultMatchMap, null, 2);
+        categoriesRecord = config.categoriesMatchMap;
+        localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(config.categoriesMatchMap));
+        categoriesEls.textarea.textContent = JSON.stringify(config.categoriesMatchMap, null, 2);
     }
 
     function onCategoriesRecordExport() {
@@ -113,11 +112,11 @@ function loadCategoriesRecord(): CategoriesRecord {
         userCategoriesRecord = JSON.parse(localStorage.getItem(USER_CATEGORIES_RECORD_KEY) ?? '{}');
         console.log('userCategoriesRecord', userCategoriesRecord);
     } catch (e) {
-        localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(categoriesDefaultMatchMap));
+        localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(config.categoriesMatchMap));
     }
 
     return {
-        ...categoriesDefaultMatchMap,
+        ...config.categoriesMatchMap,
         ...(userCategoriesRecord instanceof Object ? userCategoriesRecord : {})
     };
 }
@@ -171,7 +170,7 @@ function saveCategoryRecord(record: any): Promise<any> {
             resolve(updatedRecord);
             console.log('== SAVED ===');
         } catch (e) {
-            console.log('== SAVE FAILED ===');
+            console.warn('== SAVE FAILED ===');
             reject(e);
         }
     })

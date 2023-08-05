@@ -1,0 +1,49 @@
+{
+  "categoriesMatchMap": {
+    "Food & Drink": [
+      "GLOVOAPP",
+      "RESTORAN",
+      "FOOD",
+      "MC DONALDS"
+    ],
+    "Groceries": [
+      "MP241 HEROJA PINKIJA",
+      "WOLT WEB SHOP",
+      "MAXI"
+    ],
+    "Bills & Fees": [
+      "A1 Srbija",
+      "www.sbb.rs SRB",
+      "Naknada za korišćenje paketa"
+    ],
+    "Subscriptions": [
+      "GOOGLE *",
+      "NETFLIX"
+    ],
+    "Travel": [
+      "AIR SERBIA",
+      "PEGASUS",
+      "BOOKING",
+      "WIENER",
+      "AIRBNB"
+    ],
+    "Healthcare": [
+      "PHARMACIES"
+    ],
+    "Entertainment": [
+      "TICKET VISION"
+    ],
+    "Home": [
+      "IKEA"
+    ],
+    "Taxi": [
+      "Taxi",
+      "Yandex Go"
+    ],
+    "Cash": [
+      "Unovčavanje Mobilnog keša",
+      "SMART ATM"
+    ],
+    "Other": []
+  }
+}

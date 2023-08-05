@@ -1,5 +1,5 @@
-import './style.css'
-import { setupConverter } from './converter.ts'
+import './style.css';
+import { setupConverter } from './converter';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <main>
@@ -53,4 +53,4 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </main>
 `
 
-setupConverter(document.querySelector<HTMLLabelElement>('#upload-xls')!)
+setupConverter(document.querySelector<HTMLLabelElement>('#upload-xls')!);
