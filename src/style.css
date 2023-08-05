@@ -97,24 +97,22 @@ section + section {
   white-space: pre-wrap;
 }
 
-/* width */
-.editor-wrapper::-webkit-scrollbar {
+/* Scrollbar */
+
+*::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-/* Track */
-.editor-wrapper::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-/* Handle */
-.editor-wrapper::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: #e0e0e0;
   border-radius: 1rem;
 }
 
-/* Handle on hover */
-.editor-wrapper::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
   background: #e7e7e7;
 }
 

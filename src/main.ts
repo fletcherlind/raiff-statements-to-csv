@@ -5,28 +5,32 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <main>
         <h1>RAIFF Statements Converter</h1>
         <section>
-            <h2>Step 0 (optional): Edit Categories Match Map</h2>
+            <h2>Step 0 (optional): Edit Categories</h2>
             <div id="categories-actions">
-                <label class="btn js-upload-btn">
-                    <input
-                        type="file" 
-                        accept=".json"
-                        hidden 
-                    />
-                    <span class="js-label">Upload</span>
-                </label>&nbsp;
-                <button class="btn js-edit-btn">Edit</button>
+                <button class="btn js-edit-btn">Edit Categories</button>
             </div>
             <aside id="categories-editor" class="categories-editor hidden">
+                <p>Manage keywords for matching categories. Keywords are case-insensitive.</p>
                 <div class="editor-wrapper js-editor-wrapper">
                     <ul class="editor-lines js-editor-lines"></ul>
                     <pre class="editor-textarea js-editor" contenteditable="true"></pre>
                 </div>
-                <button class="btn js-cancel-btn" class="btn">Cancel</button>
-                <button class="btn js-save-btn" class="btn">Save</button>
-                |
-                <button class="btn js-reset-btn" class="btn">Reset to Defaults</button>
-                <button class="btn js-export-btn" class="btn">Export</button>
+                <footer>
+                    <button class="btn js-save-btn" class="btn">Save</button>&nbsp;
+                    <button class="btn js-cancel-btn" class="btn">Cancel</button>
+                    &nbsp;|&nbsp;
+                    <button class="btn js-reset-btn" class="btn">Reset to Defaults</button>
+                    &nbsp;|&nbsp;
+                    <label class="btn js-upload-btn">
+                        <input
+                            type="file" 
+                            accept=".json"
+                            hidden 
+                        />
+                        <span class="js-label">Upload</span>
+                    </label>&nbsp;
+                    <button class="btn js-export-btn" class="btn">Export</button>
+                </footer>
             </aside>
         </section>
         <section>
