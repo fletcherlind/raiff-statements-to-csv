@@ -1,0 +1,139 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin-top: 2rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin-bottom: 4rem;
+}
+
+section + section {
+  margin-top: 2rem;
+}
+
+.categories-editor {
+  margin-top: 2rem;
+}
+
+.editor-wrapper {
+  position: relative;
+  height: 40rem;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  border: solid 5px #f1f1f1;
+}
+
+.editor-lines {
+  position: absolute;
+  top: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  padding-top: 1rem;
+  font-size: 13px;
+  list-style: decimal;
+  list-style-position: inside;
+  color: #b6b6b6;
+  line-height: 1rem;
+  text-align: left;
+}
+
+.editor-lines li {
+  padding-left: 1rem;
+}
+
+.editor-lines li:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.editor-lines li:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.editor-textarea {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  width: 100%;
+  padding: 1rem;
+  padding-left: 3rem;
+  background: transparent;
+
+  outline: none;
+  line-height: 1rem;
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.hidden {
+  display: none;
+}
+
+/* --- */
+
+.btn {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  text-decoration: none;
+  color: currentColor;
+}
+
+.btn:hover {
+  border-color: #646cff;
+}
+
+.btn:focus,
+.btn:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  .btn {
+    background-color: #f9f9f9;
+  }
+}
