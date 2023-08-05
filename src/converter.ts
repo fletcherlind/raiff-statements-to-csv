@@ -3,12 +3,12 @@ import readXlsxFile from 'read-excel-file';
 import config from './config.json';
 
 const SEPARATOR = ',';
-const USER_CATEGORIES_RECORD_KEY = 'USER_CATEGORIES_RECORD';
+const CATEGORY_MATCH_MAP_KEY = 'CATEGORY_MATCH_MAP';
 
-type CategoriesRecord = Record<string, string[]>;
+type CategoriesMatchMap = Record<string, string[]>;
 
 export function setupConverter(uploadBtnEl: HTMLLabelElement) {
-    let categoriesRecord = loadCategoriesRecord();
+    let categoriesMatchMap = loadCategoriesMatchMap();
 
     const uploadInputEl = uploadBtnEl.getElementsByTagName('input')[0];
     const categoriesEls = {
@@ -23,13 +23,13 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
         exportBtn: <HTMLButtonElement>document.querySelector('#categories-editor .js-export-btn')!,
     };
 
-    categoriesEls.editBtn.addEventListener('click', onCategoriesRecordEdit);
-    categoriesEls.cancelBtn.addEventListener('click', onCategoriesRecordCancel);
-    categoriesEls.saveBtn.addEventListener('click', onCategoriesRecordSave);
-    categoriesEls.resetBtn.addEventListener('click', onCategoriesRecordReset);
-    categoriesEls.exportBtn.addEventListener('click', onCategoriesRecordExport);
+    categoriesEls.editBtn.addEventListener('click', onCategoriesMatchMapEdit);
+    categoriesEls.cancelBtn.addEventListener('click', onCategoriesMatchMapCancel);
+    categoriesEls.saveBtn.addEventListener('click', onCategoriesMatchMapSave);
+    categoriesEls.resetBtn.addEventListener('click', onCategoriesMatchMapReset);
+    categoriesEls.exportBtn.addEventListener('click', onCategoriesMatchMapExport);
 
-    categoriesEls.uploadInput.addEventListener('change', onCategoriesRecordUpload);
+    categoriesEls.uploadInput.addEventListener('change', onCategoriesMatchMapUpload);
     uploadBtnEl.addEventListener('change', onFileUpload);
 
     categoriesEls.textarea.addEventListener('input', onEditorChange);
@@ -38,12 +38,12 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
 
     ///
 
-    function onCategoriesRecordUpload() {
+    function onCategoriesMatchMapUpload() {
         const reader = new FileReader();
         reader.onload = async function() {
             await saveCategoryRecord(reader.result)
                 .then((savedRecord) => {
-                    categoriesRecord = savedRecord;
+                    categoriesMatchMap = savedRecord;
                     categoriesEls.textarea.textContent = JSON.stringify(savedRecord, null, 2);
                 })
                 .catch(alert);
@@ -54,30 +54,30 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
             reader.readAsText(categoriesEls.uploadInput.files[0]);
     }
 
-    function onCategoriesRecordEdit() {
-        categoriesEls.textarea.textContent = JSON.stringify(categoriesRecord, null, 2);
+    function onCategoriesMatchMapEdit() {
+        categoriesEls.textarea.textContent = JSON.stringify(categoriesMatchMap, null, 2);
         categoriesEls.editorWrapper.classList.toggle('hidden');
     }
 
-    function onCategoriesRecordSave() {
+    function onCategoriesMatchMapSave() {
         saveCategoryRecord(categoriesEls.textarea?.textContent)
             .then(() => categoriesEls.editorWrapper.classList.toggle('hidden'))
             .catch(alert)
     }
 
-    function onCategoriesRecordCancel() {
+    function onCategoriesMatchMapCancel() {
         categoriesEls.editorWrapper.classList.toggle('hidden');
     }
 
-    function onCategoriesRecordReset() {
-        categoriesRecord = config.categoriesMatchMap;
-        localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(config.categoriesMatchMap));
+    function onCategoriesMatchMapReset() {
+        categoriesMatchMap = config.categoriesMatchMap;
+        localStorage.setItem(CATEGORY_MATCH_MAP_KEY, JSON.stringify(config.categoriesMatchMap));
         categoriesEls.textarea.textContent = JSON.stringify(config.categoriesMatchMap, null, 2);
     }
 
-    function onCategoriesRecordExport() {
-        const categoriesRecord = localStorage.getItem(USER_CATEGORIES_RECORD_KEY)!;
-        saveFile(categoriesRecord, 'categories-match-settings.json')
+    function onCategoriesMatchMapExport() {
+        const categoriesMatchMap = localStorage.getItem(CATEGORY_MATCH_MAP_KEY)!;
+        saveFile(categoriesMatchMap, 'categories-match-map.json')
     }
 
     function onFileUpload() {
@@ -89,7 +89,7 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
         readXlsxFile(uploadInputEl.files[0]).then(async (rows) => {
             // titleEl.textContent = 'Converted!';
             uploadInputEl.value = '';
-            await saveFile(convertToCsv(rows, categoriesRecord), 'Statement.csv');
+            await saveFile(convertToCsv(rows, categoriesMatchMap), 'Statement.csv');
         })
     }
 
@@ -105,19 +105,19 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
 
 ///
 
-function loadCategoriesRecord(): CategoriesRecord {
-    let userCategoriesRecord = null;
+function loadCategoriesMatchMap(): CategoriesMatchMap {
+    let userCategoriesMatchMap = null;
 
     try {
-        userCategoriesRecord = JSON.parse(localStorage.getItem(USER_CATEGORIES_RECORD_KEY) ?? '');
+        userCategoriesMatchMap = JSON.parse(localStorage.getItem(CATEGORY_MATCH_MAP_KEY) ?? '');
     } catch (e) {}
 
-    return userCategoriesRecord
-        ? userCategoriesRecord
+    return userCategoriesMatchMap
+        ? userCategoriesMatchMap
         : config.categoriesMatchMap;
 }
 
-function convertToCsv(rows: Row[], categoriesRecord: CategoriesRecord) {
+function convertToCsv(rows: Row[], categoriesMatchMap: CategoriesMatchMap) {
     const result = rows
         .filter((row) => row[0] instanceof Date)
         .map(row => ({
@@ -143,12 +143,12 @@ function convertToCsv(rows: Row[], categoriesRecord: CategoriesRecord) {
 
     ///
 
-    function matchCategory<T extends keyof CategoriesRecord>(desc: string): T {
-        return (Object.keys(categoriesRecord) as T[])
+    function matchCategory<T extends keyof CategoriesMatchMap>(desc: string): T {
+        return (Object.keys(categoriesMatchMap) as T[])
             .find(categoryMatcher) ?? <T>'Other';
 
         function categoryMatcher(categoryName: string): boolean {
-            const keywords = categoriesRecord[categoryName];
+            const keywords = categoriesMatchMap[categoryName];
             return keywords.some(keyword =>
                 String(desc).toUpperCase().includes(keyword.toUpperCase())
             );
@@ -162,7 +162,7 @@ function saveCategoryRecord(record: any): Promise<any> {
         console.log('== SAVE CATEGORY MATCH SETTING ===');
         try {
             const updatedRecord = JSON.parse(record);
-            localStorage.setItem(USER_CATEGORIES_RECORD_KEY, JSON.stringify(updatedRecord));
+            localStorage.setItem(CATEGORY_MATCH_MAP_KEY, JSON.stringify(updatedRecord));
             resolve(updatedRecord);
             console.log('== SAVED ===');
         } catch (e) {
