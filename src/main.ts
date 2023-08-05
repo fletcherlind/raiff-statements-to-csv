@@ -3,7 +3,7 @@ import { setupConverter } from './converter';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <main>
-        <h1>RAIFF Statements Converter</h1>
+        <h1>RAIFF Statements to CSV</h1>
         <section>
             <h2>Step 0 (optional): Edit Categories</h2>
             <div id="categories-actions">
@@ -53,6 +53,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 />
                 <span class="js-label">Choose XLS File</span>
             </label>
+        </section>
+        <section>
+            <h2>Step 3: Import your statement in <a href="https://www.spendee.com/">Spendee</a></h2>
+            <h3>or another money-management tool</h3>
         </section>
     </main>
 `
