@@ -76,7 +76,7 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
     }
 
     function onCategoriesMatchMapExport() {
-        const categoriesMatchMap = localStorage.getItem(CATEGORY_MATCH_MAP_KEY)!;
+        const categoriesMatchMap = localStorage.getItem(CATEGORY_MATCH_MAP_KEY) ?? JSON.stringify(config.categoriesMatchMap);
         saveFile(categoriesMatchMap, 'categories-match-map.json')
     }
 
