@@ -76,8 +76,12 @@ export function setupConverter(uploadBtnEl: HTMLLabelElement) {
     }
 
     function onCategoriesMatchMapExport() {
-        const categoriesMatchMap = localStorage.getItem(CATEGORY_MATCH_MAP_KEY) ?? JSON.stringify(config.categoriesMatchMap);
-        saveFile(categoriesMatchMap, 'categories-match-map.json')
+        const categoriesMatchMap = loadCategoriesMatchMap();
+     
+        saveFile(
+            JSON.stringify(categoriesMatchMap, null, 2),
+            'categories-match-map.json'
+        )
     }
 
     function onFileUpload() {
@@ -173,7 +177,6 @@ function saveCategoryRecord(record: any): Promise<any> {
 }
 
 async function saveFile(content: string, name: string) {
-    console.log('content', content);
     const opts = {
         suggestedName: name,
     };
