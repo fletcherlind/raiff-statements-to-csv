@@ -82,10 +82,10 @@ section + section {
 }
 
 .editor-textarea {
-  position: absolute;
-  left: 0;
-  right: 0;
+  position: relative;
   display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
   margin-top: 0;
   padding: 1rem;
   padding-left: 3rem;
